@@ -1,0 +1,22 @@
+{
+    "img_size": [
+        224,
+        224
+    ],
+    "batch_size": 32,
+    "classes": [
+        "glioma",
+        "meningioma",
+        "notumor",
+        "pituitary"
+    ],
+    "class_weight": {
+        "0": 0.7993788819875777,
+        "1": 1.1050372066399543,
+        "2": 1.2406812339331619,
+        "3": 0.9633233532934131
+    },
+    "train_samples": 7722,
+    "val_samples": 1928,
+    "test_samples": 2414
+}
