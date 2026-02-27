@@ -1,0 +1,15 @@
+brain_tumor_env/
+
+dataset/
+
+models/*.h5
+models/*.keras
+
+.ipynb_checkpoints/
+
+__pycache__/
+*.pyc
+*.pyo
+
+.DS_Store
+Thumbs.db
