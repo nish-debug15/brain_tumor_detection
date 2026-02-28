@@ -145,16 +145,12 @@ python 3.10
 
 ### Installation
 ```bash
-git clone https://github.com/yourusername/brain_tumor_detection.git
+git clone https://github.com/nish-debug15/brain_tumor_detection.git
 cd brain_tumor_detection
 python -m venv brain_tumor_env
 brain_tumor_env\Scripts\activate
 pip install -r requirements.txt
 ```
-
-### Download Dataset
-Download from: https://data.mendeley.com/datasets/zwr4ntf94j/5  
-Place the `Train/` and `Test/` folders inside `dataset/`
 
 ### Run Notebooks
 Open in VS Code with Jupyter extension, run in order:
@@ -204,7 +200,6 @@ A false negative (missing a real tumor) is far more dangerous than a false posit
 
 - Tan, M., & Le, Q. (2019). EfficientNet: Rethinking Model Scaling for CNNs. *ICML 2019*
 - Selvaraju, R. R., et al. (2017). Grad-CAM: Visual Explanations from Deep Networks. *ICCV 2017*
-- Dataset: Mendeley Data — https://data.mendeley.com/datasets/zwr4ntf94j/5
 
 ---
 
