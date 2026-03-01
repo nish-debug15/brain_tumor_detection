@@ -1,6 +1,6 @@
 # 🧠 Brain Tumor Detection & Classification
 
-An end-to-end deep learning system for automated brain tumor detection and classification using MRI scans. Built using Transfer Learning (EfficientNetB0) with Grad-CAM explainability and deployed via a Streamlit web application.
+An end-to-end deep learning system for automated brain tumor detection and classification using MRI scans. Built using Transfer Learning (ResNet50) with Grad-CAM explainability and deployed via a Streamlit web application.
 
 ---
 
@@ -50,7 +50,7 @@ brain_tumor_detection/
 │   ├── 03_model_training.ipynb    # Model Building & Training (Colab)
 │   └── 04_evaluation.ipynb        # Evaluation & Grad-CAM
 ├── models/
-│   ├── best_model_finetuned.keras # Best trained model
+│   ├── final_model.keras          # Best trained model 
 │   └── class_indices.json         # Class label mapping
 ├── app/
 │   └── app.py                     # Streamlit web application
