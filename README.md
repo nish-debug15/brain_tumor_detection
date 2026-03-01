@@ -1,6 +1,6 @@
 # 🧠 Brain Tumor Detection & Classification
 
-An end-to-end deep learning system for automated brain tumor detection and classification using MRI scans. Built using Transfer Learning (EfficientNetB0) with Grad-CAM explainability and deployed via a Streamlit web application.
+An end-to-end deep learning system for automated brain tumor detection and classification using MRI scans. Built using Transfer Learning (ResNet50) with Grad-CAM explainability and deployed via a Streamlit web application.
 
 ---
 
@@ -50,7 +50,7 @@ brain_tumor_detection/
 │   ├── 03_model_training.ipynb    # Model Building & Training (Colab)
 │   └── 04_evaluation.ipynb        # Evaluation & Grad-CAM
 ├── models/
-│   ├── best_model_finetuned.keras # Best trained model
+│   ├── final_model.keras          # Best trained model 
 │   └── class_indices.json         # Class label mapping
 ├── app/
 │   └── app.py                     # Streamlit web application
@@ -84,8 +84,8 @@ brain_tumor_detection/
 | Category | Tools |
 |----------|-------|
 | Language | Python 3.10 |
-| Deep Learning | TensorFlow 2.x, Keras |
-| Model | EfficientNetB0 (Transfer Learning) |
+| Deep Learning | TensorFlow 2.10.0, Keras |
+| Model | ResNet50 |
 | Explainability | Grad-CAM |
 | Data Processing | NumPy, Pandas, OpenCV, Pillow |
 | Visualization | Matplotlib, Seaborn |
@@ -114,9 +114,9 @@ Data Collection → EDA → Preprocessing & Augmentation → Model Building
 - Class weights to handle imbalance
 - 80/20 train/validation split
 
-### 3. Model — EfficientNetB0 + Transfer Learning
+### 3. Model — ResNet50 + Transfer Learning
 - **Phase 1:** Frozen base, train custom head (lr=1e-3, 15 epochs)
-- **Phase 2:** Fine-tune top 30 layers (lr=1e-4, 20 epochs)
+- **Phase 2:** Fine-tune top 20 layers (lr=1e-5, 20 epochs)
 - Callbacks: EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 
 ### 4. Evaluation
@@ -156,7 +156,7 @@ pip install -r requirements.txt
 Open in VS Code with Jupyter extension, run in order:
 1. `01_eda.ipynb`
 2. `02_preprocessing.ipynb`
-3. `03_model_training.ipynb` *(run on Google Colab with T4 GPU)*
+3. `03_model_training.ipynb` 
 4. `04_evaluation.ipynb`
 
 ### Run Streamlit App
@@ -169,37 +169,41 @@ streamlit run app.py
 
 ## 📈 Results
 
-> *(To be updated after training completes)*
-
 | Metric | Score |
 |--------|-------|
-| Training Accuracy | - |
-| Validation Accuracy | - |
-| Test Accuracy | - |
-| F1 Score (Weighted) | - |
+| Training Accuracy | 74.67% |
+| Validation Accuracy | 76.82% |
+| Test Accuracy | 74.19% |
+| Precision (Weighted) | 73.55% |
+| Recall (Weighted) | 74.19% |
+| F1 Score (Weighted) | 72.84% |
+
+### Per Class Performance
+
+| Class | Precision | Recall | F1 Score |
+|-------|-----------|--------|----------|
+| Glioma | 81% | 61% | 69% |
+| Meningioma | 55% | 45% | 50% |
+| No Tumor | 76% | 98% | 85% |
+| Pituitary | 80% | 97% | 87% |
+
+> Model: ResNet50 with Transfer Learning. Best performance on No Tumor (98% recall) and Pituitary (97% recall) classes. Meningioma remains the most challenging class due to visual similarity with other tumor types.
 
 ---
 
 ## 🔍 Key Design Decisions
 
-**Why EfficientNetB0?**  
-Achieves high accuracy with only 5.3M parameters compared to VGG16's 138M, using compound scaling across depth, width, and resolution.
+**Why ResNet50?**
+ResNet50 achieves strong performance on medical imaging tasks through residual/skip connections that solve the vanishing gradient problem, enabling effective training of deep 50-layer networks. We initially tried EfficientNetB0 but it plateaued at 33% accuracy on MRI data — ResNet50 reached 68% by Epoch 2, making it the clear choice for this dataset.
 
 **Why Transfer Learning?**  
-Our dataset of 12,064 images is insufficient to train a CNN from scratch. EfficientNetB0 pre-trained on ImageNet (1.2M images) provides rich feature representations that transfer well to medical imaging.
+Our dataset of 12,064 images is insufficient to train a CNN from scratch. ResNet50 pre-trained on ImageNet (1.2M images) provides rich feature representations that transfer well to medical imaging.
 
 **Why Grad-CAM?**  
 Medical AI without explainability cannot be trusted clinically. Grad-CAM makes the model's decision process transparent by highlighting the exact MRI regions that influenced the prediction.
 
 **Why emphasize Recall?**  
 A false negative (missing a real tumor) is far more dangerous than a false positive. We optimize recall to minimize the risk of undetected tumors.
-
----
-
-## 📝 References
-
-- Tan, M., & Le, Q. (2019). EfficientNet: Rethinking Model Scaling for CNNs. *ICML 2019*
-- Selvaraju, R. R., et al. (2017). Grad-CAM: Visual Explanations from Deep Networks. *ICCV 2017*
 
 ---
 
