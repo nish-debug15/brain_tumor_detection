@@ -84,7 +84,7 @@ brain_tumor_detection/
 | Category | Tools |
 |----------|-------|
 | Language | Python 3.10 |
-| Deep Learning | TensorFlow 2.x, Keras |
+| Deep Learning | TensorFlow 2.10.0, Keras |
 | Model | EfficientNetB0 (Transfer Learning) |
 | Explainability | Grad-CAM |
 | Data Processing | NumPy, Pandas, OpenCV, Pillow |
@@ -169,14 +169,25 @@ streamlit run app.py
 
 ## 📈 Results
 
-> *(To be updated after training completes)*
-
 | Metric | Score |
 |--------|-------|
-| Training Accuracy | - |
-| Validation Accuracy | - |
-| Test Accuracy | - |
-| F1 Score (Weighted) | - |
+| Training Accuracy | 74.67% |
+| Validation Accuracy | 76.82% |
+| Test Accuracy | 74.19% |
+| Precision (Weighted) | 73.55% |
+| Recall (Weighted) | 74.19% |
+| F1 Score (Weighted) | 72.84% |
+
+### Per Class Performance
+
+| Class | Precision | Recall | F1 Score |
+|-------|-----------|--------|----------|
+| Glioma | 81% | 61% | 69% |
+| Meningioma | 55% | 45% | 50% |
+| No Tumor | 76% | 98% | 85% |
+| Pituitary | 80% | 97% | 87% |
+
+> Model: ResNet50 with Transfer Learning. Best performance on No Tumor (98% recall) and Pituitary (97% recall) classes. Meningioma remains the most challenging class due to visual similarity with other tumor types.
 
 ---
 
