@@ -85,7 +85,7 @@ brain_tumor_detection/
 |----------|-------|
 | Language | Python 3.10 |
 | Deep Learning | TensorFlow 2.10.0, Keras |
-| Model | EfficientNetB0 (Transfer Learning) |
+| Model | ResNet50 |
 | Explainability | Grad-CAM |
 | Data Processing | NumPy, Pandas, OpenCV, Pillow |
 | Visualization | Matplotlib, Seaborn |
@@ -114,9 +114,9 @@ Data Collection → EDA → Preprocessing & Augmentation → Model Building
 - Class weights to handle imbalance
 - 80/20 train/validation split
 
-### 3. Model — EfficientNetB0 + Transfer Learning
+### 3. Model — ResNet50 + Transfer Learning
 - **Phase 1:** Frozen base, train custom head (lr=1e-3, 15 epochs)
-- **Phase 2:** Fine-tune top 30 layers (lr=1e-4, 20 epochs)
+- **Phase 2:** Fine-tune top 20 layers (lr=1e-5, 20 epochs)
 - Callbacks: EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 
 ### 4. Evaluation
@@ -156,7 +156,7 @@ pip install -r requirements.txt
 Open in VS Code with Jupyter extension, run in order:
 1. `01_eda.ipynb`
 2. `02_preprocessing.ipynb`
-3. `03_model_training.ipynb` *(run on Google Colab with T4 GPU)*
+3. `03_model_training.ipynb` 
 4. `04_evaluation.ipynb`
 
 ### Run Streamlit App
@@ -193,8 +193,8 @@ streamlit run app.py
 
 ## 🔍 Key Design Decisions
 
-**Why EfficientNetB0?**  
-Achieves high accuracy with only 5.3M parameters compared to VGG16's 138M, using compound scaling across depth, width, and resolution.
+**Why ResNet50?**
+ResNet50 achieves strong performance on medical imaging tasks through residual/skip connections that solve the vanishing gradient problem, enabling effective training of deep 50-layer networks. We initially tried EfficientNetB0 but it plateaued at 33% accuracy on MRI data — ResNet50 reached 68% by Epoch 2, making it the clear choice for this dataset.
 
 **Why Transfer Learning?**  
 Our dataset of 12,064 images is insufficient to train a CNN from scratch. EfficientNetB0 pre-trained on ImageNet (1.2M images) provides rich feature representations that transfer well to medical imaging.
