@@ -42,7 +42,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 BASE_DIR    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MODEL_PATH  = os.path.join(BASE_DIR, "models", "best_model_finetuned.keras")
+MODEL_PATH  = os.path.join(BASE_DIR, "models", "final_model.keras")
 IMG_SIZE    = (224, 224)
 CLASS_NAMES = ['glioma', 'meningioma', 'notumor', 'pituitary']
 
