@@ -47,7 +47,7 @@ brain_tumor_detection/
 ├── notebooks/
 │   ├── 01_eda.ipynb               # Exploratory Data Analysis
 │   ├── 02_preprocessing.ipynb     # Preprocessing & Augmentation
-│   ├── 03_model_training.ipynb    # Model Building & Training (Colab)
+│   ├── 03_model_training.ipynb    # Model Building & Training 
 │   └── 04_evaluation.ipynb        # Evaluation & Grad-CAM
 ├── models/
 │   ├── final_model.keras          # Best trained model 
