@@ -1,10 +1,10 @@
-# 🧠 Brain Tumor Detection & Classification
+# Brain Tumor Detection & Classification
 
 An end-to-end deep learning system for automated brain tumor detection and classification using MRI scans. Built using Transfer Learning (ResNet50) with Grad-CAM explainability and deployed via a Streamlit web application.
 
 ---
 
-## 📌 Project Overview
+## Project Overview
 
 Brain tumor diagnosis requires expert radiologists to manually examine MRI scans — a process that is time-consuming, expensive, and prone to human error. This project automates tumor detection and classification using deep learning, providing instant predictions with visual explanations to assist clinical decision-making.
 
@@ -16,7 +16,7 @@ Brain tumor diagnosis requires expert radiologists to manually examine MRI scans
 
 ---
 
-## 👥 Team
+## Team
 
 | Name | Role |
 |------|------|
@@ -29,7 +29,7 @@ Brain tumor diagnosis requires expert radiologists to manually examine MRI scans
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 brain_tumor_detection/
@@ -63,7 +63,7 @@ brain_tumor_detection/
 
 ---
 
-## 📊 Dataset
+## Dataset
 
 **Source:** Mendeley Data — Brain Tumor MRI Dataset  
 **Link:** https://data.mendeley.com/datasets/zwr4ntf94j/5  
@@ -94,7 +94,7 @@ brain_tumor_detection/
 
 ---
 
-## 🔄 Project Workflow
+## Project Workflow
 
 ```
 Data Collection → EDA → Preprocessing & Augmentation → Model Building
@@ -136,7 +136,7 @@ Data Collection → EDA → Preprocessing & Augmentation → Model Building
 
 ---
 
-## 🚀 Setup & Run
+## Setup & Run
 
 ### Prerequisites
 ```bash
@@ -167,7 +167,7 @@ streamlit run app.py
 
 ---
 
-## 📈 Results
+## Results
 
 | Metric | Score |
 |--------|-------|
@@ -191,7 +191,7 @@ streamlit run app.py
 
 ---
 
-## 🔍 Key Design Decisions
+## Key Design Decisions
 
 **Why ResNet50?**
 ResNet50 achieves strong performance on medical imaging tasks through residual/skip connections that solve the vanishing gradient problem, enabling effective training of deep 50-layer networks. We initially tried EfficientNetB0 but it plateaued at 33% accuracy on MRI data — ResNet50 reached 68% by Epoch 2, making it the clear choice for this dataset.
