@@ -79,7 +79,7 @@ brain_tumor_detection/
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 
 | Category | Tools |
 |----------|-------|
@@ -207,6 +207,6 @@ A false negative (missing a real tumor) is far more dangerous than a false posit
 
 ---
 
-## 📄 License
+## License
 
 This project is for academic purposes — 4th Semester AIML Project.
