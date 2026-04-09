@@ -68,13 +68,40 @@ def find_last_conv_layer(model):
     return None
 
 def make_gradcam_heatmap(img_array, model, last_conv_layer_name, pred_index=None):
+    # Ensure the model has its output property populated
     try:
+        model.output
+    except (AttributeError, ValueError):
+        model.predict(np.zeros((1, *IMG_SIZE, 3)), verbose=0)
+
+    try:
+        # Find the target layer (might be nested in a base model)
+        target_layer = None
+        if last_conv_layer_name in [l.name for l in model.layers]:
+            target_layer = model.get_layer(last_conv_layer_name)
+        else:
+            for layer in model.layers:
+                if hasattr(layer, "layers"):
+                    try:
+                        target_layer = layer.get_layer(last_conv_layer_name)
+                        break
+                    except ValueError:
+                        continue
+
+        if target_layer is None:
+            return None
+
+        # Reconstruct a model that outputs BOTH the target layer and the final output.
+        # This is the most robust way in Keras 3 to get gradients across nested layers.
         grad_model = keras.models.Model(
             inputs=model.inputs,
-            outputs=[model.get_layer(last_conv_layer_name).output, model.output],
+            outputs=[target_layer.output, model.output],
         )
-    except ValueError:
+    except (ValueError, AttributeError, TypeError):
+        # If building the grad_model fails (common with complex nested models),
+        # return None instead of crashing the whole app.
         return None
+
     with tf.GradientTape() as tape:
         inputs = tf.cast(img_array, tf.float32)
         conv_outputs, predictions = grad_model(inputs)
@@ -93,7 +120,7 @@ def overlay_gradcam(original_img: Image.Image, heatmap: np.ndarray, alpha=0.45):
     img = np.array(original_img.convert("RGB").resize(IMG_SIZE))
     heatmap_resized = cv2.resize(heatmap, (img.shape[1], img.shape[0]))
     heatmap_uint8   = np.uint8(255 * heatmap_resized)
-    colormap        = cm.get_cmap("inferno")
+    colormap        = plt.colormaps["inferno"]
     heatmap_color   = colormap(heatmap_uint8 / 255.0)[:, :, :3]
     heatmap_color   = np.uint8(255 * heatmap_color)
     superimposed = cv2.addWeighted(img, 1 - alpha, heatmap_color, alpha, 0)
@@ -117,7 +144,15 @@ st.markdown("---")
 
 model = load_model()
 if model is None:
-    st.error(f"Model not found at `{MODEL_PATH}`. Make sure you run streamlit from your project root directory.")
+    st.error(f"### ❌ Model not found")
+    st.markdown(f"""
+    The model file was not found at `{MODEL_PATH}`.
+
+    **To fix this:**
+    1. Ensure you have trained the model using the notebooks.
+    2. Place the trained model file (`final_model.keras`) in the `models/` directory.
+    3. If you are deploying this app, make sure the model file is included in your deployment (note that it is currently in `.gitignore`).
+    """)
     st.stop()
 
 last_conv = find_last_conv_layer(model)
