@@ -46,9 +46,14 @@ MODEL_PATH  = os.path.join(BASE_DIR, "models", "final_model.keras")
 IMG_SIZE    = (224, 224)
 CLASS_NAMES = ['glioma', 'meningioma', 'notumor', 'pituitary']
 
-@st.cache_resource(show_spinner=False)
+@st.cache_resource 
 def load_model():
+    import os
+    print(f"DEBUG: Checking path: {MODEL_PATH}")
+    print(f"DEBUG: Exists? {os.path.exists(MODEL_PATH)}")
+    
     if not os.path.exists(MODEL_PATH):
+        st.error(f"Model not found at {MODEL_PATH}")
         return None
     return keras.models.load_model(MODEL_PATH)
 
